@@ -1,6 +1,6 @@
 {
     "name": "tradex2",
-    "version": "0.2.0-alpha.1",
+    "version": "3.2.0",
     "repository": {
         "type": "git",
         "url": "git+https://github.com/lijiakof/tradex.git"
