@@ -2,8 +2,9 @@ name: Next release
 
 on:
   push:
-    branch:
-      - master
+    branches: [ master ]
+  pull_request:
+    branches: [ release ]
 
 jobs:
   publish-to-npm:
@@ -19,6 +20,6 @@ jobs:
           registry-url: https://registry.npmjs.org/
 
       - name: release
-          run: npm publish
-          env:
-            NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
