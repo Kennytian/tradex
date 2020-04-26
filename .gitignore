@@ -71,3 +71,6 @@ typings/
 
 # APP
 test/
+
+# IDE
+.idea
