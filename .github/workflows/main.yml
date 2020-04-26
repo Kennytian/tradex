@@ -15,11 +15,7 @@ jobs:
         with:
           node-version: '10.x'
           registry-url: 'https://registry.npmjs.org'
-      - run: git checkout master
-      - name: Install
-        run: yarn install --ignore-scripts
-      - name: Release tradex2
-        run: |
-          yarn publish --prepatch --preid "$(git rev-parse --short HEAD)" --tag alpha --no-git-tag-version
+      - run: npm install
+      - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
