@@ -1,18 +1,18 @@
 const axios = require('axios');
 const moment = require('moment');
-const querystring = require('querystring');
-const core = require('./core');
+const { cryptor, querystring } = require('./core');
 
 module.exports = class Binance {
     constructor(host, apiKey, secretKey) {
+        this.id = 'binance';
         this.host = host || 'https://api.binance.com';
         this.apiKey = apiKey;
         this.secretKey = secretKey;
     }
 
     sign(data) {
-        const query = querystring.encode(data);
-        const signature = core.hmac(query, this.secretKey, 'sha256', 'hex');
+        const query = querystring.stringify(data);
+        const signature = cryptor.hmac(query, this.secretKey, 'sha256', 'hex');
 
         return signature;
     }
@@ -34,17 +34,17 @@ module.exports = class Binance {
             url: `${this.host}${path}`,
             headers,
             timeout: 34000,
-            params: method === 'GET' ? data : null,
-            data: method === 'POST' ? querystring.encode(data) : null
+            params: (method === 'GET' || method === 'DELETE') ? data : null,
+            data: method === 'POST' ? querystring.stringify(data) : null
         }).then(res => {
             return res.data;
         }, err => {
             console.log(`${moment.utc().format('YYYY-MM-DDTHH:mm:ss')} error: ${path}`);
-            console.error(err)
+            console.error(err);
 
             throw err;
         });
 
         return resp;
     }
-}
+};
