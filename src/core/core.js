@@ -1,7 +1,6 @@
 const crypto = require('crypto');
-const querystring = require('querystring');
 
-const core = {
+const cryptor = {
     hash(data, algorithm='md5', encoding='hex') {
         const hs = crypto.createHash(algorithm);
 
@@ -14,4 +13,18 @@ const core = {
     }
 };
 
-module.exports = core;
+const querystring = {
+    stringify(params, sort) {
+        let pars = [];
+        for (let item in params) {
+            params[item] && pars.push(item + '=' + encodeURIComponent(params[item]));
+        }
+
+        let query = sort ? pars.sort().join('&') : pars.join('&');
+
+        return query;
+    },
+    parse() {}
+};
+
+module.exports = { cryptor, querystring };
